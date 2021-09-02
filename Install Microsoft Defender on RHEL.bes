@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Task>
+		<Title>Install Microsoft Defender on RHEL</Title>
+		<Description><![CDATA[<P>This tasks installs Microsoft Defender Endpoint for Windows on RHEL.</P>
+<P>The latest version is downloaded from Yum repo</P>]]></Description>
+		<Relevance>name of operating system contains "Red Hat"</Relevance>
+		<Relevance>NOT exists package "mdatp" of rpm</Relevance>
+		<Category></Category>
+		<Source>Internal</Source>
+		<SourceID></SourceID>
+		<SourceReleaseDate>2021-09-01</SourceReleaseDate>
+		<SourceSeverity></SourceSeverity>
+		<CVENames></CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Wed, 01 Sep 2021 09:08:16 +0000</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink> to deploy this action.</PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[// David C 2021-09-01
+parameter "scriptFile" = "{parent folder of parent folder of client folder of current site}/install_mdatp.bash"
+parameter "logFile" = "{parent folder of parent folder of client folder of current site}/install_mdatp.log"
+delete "{parameter "scriptFile"}"
+delete "{parameter "logFile"}"
+
+createfile until __end__
+#!/bin/bash
+set -xv
+yum install -y yum-utils
+yum-config-manager --add-repo=https://packages.microsoft.com/config/rhel/8/prod.repo
+rpm --import http://packages.microsoft.com/keys/microsoft.asc
+yum makecache
+sleep 5
+yum install -y mdatp
+sleep 20
+mdatp definitions update
+mdatp config real-time-protection --value enabled
+sleep 5
+mdatp scan quick
+exit $?
+__end__
+
+move __createfile "{parameter "scriptFile"}"
+wait chmod 555 "{parameter "scriptFile"}"
+wait /bin/bash -c "{parameter "scriptFile"} > {parameter "logFile"} 2>&1 "
+delete "{parameter "scriptFile"}"
+
+]]></ActionScript>
+		</DefaultAction>
+	</Task>
+</BES>

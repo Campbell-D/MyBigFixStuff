@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Analysis>
+		<Title>Microsoft Defender Endpoint for Linux - Status</Title>
+		<Description><![CDATA[<DIV class=subsection>
+<P>This analysis returns details of the Microsoft Defender&nbsp;Endpoint for Linux&nbsp;Status including:</P>
+<P><FONT color=#ff0000>Marked ? need further investigation</FONT></P>
+<UL>
+<LI>AntiMalware - Enabled ? 
+<LI>AntiMalware - Service Version ? 
+<LI>AntiMalware - Engine Version Y 
+<LI>AntiSpyware - Enabled ? 
+<LI>AntiSpyware - Signature Version ? 
+<LI>AntiSpyware - Signature Last Updated&nbsp; ? 
+<LI>AntiVirus - Enabled ? 
+<LI>AntiVirus - Signature Version Y 
+<LI>AntiVirus - Signature Last Updated&nbsp; Y 
+<LI>BehaviorMonitor - Enabled ? 
+<LI>RealTimeProtection - Enabled <FONT color=#ff0000>Y Duplicate?</FONT> 
+<LI>FullScan - Age (Days) ? 
+<LI>FullScan - Scan Duration ? 
+<LI>IOAV Protection - Enabled ? 
+<LI>NRIS - Enabled ? 
+<LI>NRIS - Engine Version ? 
+<LI>NRIS - Signature Version ? 
+<LI>NRIS - Signature Last Updated ? 
+<LI>OnAccess Protection - Enabled ? 
+<LI>QuickScan - Age (Days) ? 
+<LI>QuickScan - Scan Duration ? 
+<LI>RealTime Protection - Enabled <FONT color=#ff0000>Y Duplicate?</FONT> 
+<LI>RealTime Protection - Scan Direction ?</LI></UL></DIV>]]></Description>
+		<GroupRelevance JoinByIntersection="false">
+			<SearchComponentPropertyReference PropertyName="OS" Comparison="Contains">
+				<SearchText>Linux</SearchText>
+				<Relevance>exists (operating system) whose (it as string as lowercase contains "Linux" as lowercase)</Relevance>
+			</SearchComponentPropertyReference>
+		</GroupRelevance>
+		<Source>Internal</Source>
+		<SourceReleaseDate>2021-08-26</SourceReleaseDate>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Wed, 01 Sep 2021 09:45:38 +0000</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<Property Name="mdatp version" ID="2" EvaluationPeriod="PT1H">version of package "mdatp" of rpm as string | "Not installed"</Property>
+		<Property Name="libatomic version" ID="3" EvaluationPeriod="PT1H">version of package "libatomic" of rpm as string | "Not installed"</Property>
+		<Property Name="AntiVirus - Signature Version" ID="6" EvaluationPeriod="PT1H">tuple string items 0 of (concatenations ", " of following texts of firsts ": " of (lines of file "get_mdatp_status.out" of  parent folder of parent folder of client folder of current site) whose (it starts with "definitions_version"))</Property>
+		<Property Name="RealTimeProtection - Enabled" ID="7" EvaluationPeriod="PT1H">tuple string items 0 of ( concatenations ", " of following texts of firsts ": " of (lines of file "get_mdatp_status.out" of  parent folder of parent folder of client folder of current site) whose (it starts with "real_time_protection_enabled") )</Property>
+		<Property Name="AntiMalware - Engine Version" ID="8" EvaluationPeriod="PT1H">tuple string items 0 of (concatenations ", " of following texts of firsts ": " of (lines of file "get_mdatp_status.out" of  parent folder of parent folder of client folder of current site) whose (it starts with "engine_version"))</Property>
+		<Property Name="AntiVirus - Signature Last Updated" ID="9" EvaluationPeriod="PT1H">tuple string items 0 of (concatenations ", " of following texts of firsts ": " of (lines of file "get_mdatp_status.out" of  parent folder of parent folder of client folder of current site) whose (it starts with "definitions_updated"))</Property>
+	</Analysis>
+</BES>
