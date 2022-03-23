@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Fixlet>
+		<Title>Uninstall WireShark</Title>
+		<Description><![CDATA[<DIV>This Fixlet will&nbsp;silently uninstall WireShark from Windows Computers</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>Tested with versions 3.4.23, 3.6.2 on Windows 10</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>David Campbell. BigFix Professional Services, March 2022</DIV>
+<DIV>Supplied without warranty for testing purposes only.</DIV>]]></Description>
+		<Relevance><![CDATA[version of client >= "9.2" AND not in proxy agent context AND windows of operating system AND version of operating system >= "5.1"]]></Relevance>
+		<Relevance>windows of operating system</Relevance>
+		<Relevance>x64 of operating system</Relevance>
+		<Relevance>exists keys whose(value "DisplayName" of it as string starts with "Wireshark") of keys "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall" of (x32 registries; x64 registries)</Relevance>
+		<Category>Uninstall</Category>
+		<DownloadSize>0</DownloadSize>
+		<Source>BigFix Professional Services - Testing Only, not for production use</Source>
+		<SourceID>BigFix</SourceID>
+		<SourceReleaseDate>2022-03-23</SourceReleaseDate>
+		<SourceSeverity></SourceSeverity>
+		<CVENames></CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>action-ui-metadata</Name>
+			<Value>{ "version":"3.6.2","size":77465592 }</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-cpe23-item-name</Name>
+			<Value>cpe:2.3:a:wireshark:wireshark:3.6.2:*:*:*:*:*:*:*</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Wed, 23 Mar 2022 07:45:30 +0000</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink><![CDATA[ to&nbsp;uninstall Wireshark]]></PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell">// David Campbell, March 2022 - for testing purposes only
+// UnInstall WireShark using quient uninstall command from registry
+// This may fail if multiple versions of WireShark are installed
+
+parameter "UninstCommand"="{( values "QuietUninstallString" of it) of keys whose (value "DisplayName" of it as string starts with "Wireshark") of keys "HKLM\software\microsoft\windows\currentversion\uninstall" of ( x32 registries;x64 registries)}"
+delete __appendfile
+delete uninstall_ws.cmd
+appendfile {parameter "UninstCommand"}
+move __appendfile uninstall_ws.cmd
+override wait
+hidden=true
+completion=job
+wait uninstall_ws.cmd
+</ActionScript>
+			<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>
+		</DefaultAction>
+	</Fixlet>
+</BES>
